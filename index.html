@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КП для RZD Digital — Бюро Диалектика</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; font-size: 16px; color: #0d1b2a; background: #f0f3f7; line-height: 1.6; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(13,27,42,0.97); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between; padding: 14px 40px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .nav-brand { color: #fff; font-weight: 900; font-size: 15px; letter-spacing: 0.5px; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .nav-links a:hover { color: #ff9999; }
+  .nav-cta { background: #b50000; color: #fff; border: none; padding: 9px 22px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: #d40000; }
+
+  /* HERO */
+  .hero { min-height: 100vh; background: linear-gradient(140deg, #0d1b2a 0%, #1a3353 55%, #7a0000 100%); display: flex; flex-direction: column; justify-content: center; padding: 120px 60px 80px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -120px; right: -120px; width: 600px; height: 600px; border-radius: 50%; background: rgba(255,255,255,0.03); }
+  .hero::after  { content: ''; position: absolute; bottom: -80px; left: -80px; width: 400px; height: 400px; border-radius: 50%; background: rgba(181,0,0,0.12); }
+  .hero-inner { max-width: 800px; position: relative; z-index: 1; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+  .badge-brand { background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.35); color: #fff; padding: 8px 20px; border-radius: 6px; font-size: 13px; font-weight: 900; }
+  .badge-tag { background: rgba(181,0,0,0.4); border: 1px solid rgba(255,153,153,0.4); color: #ff9999; padding: 7px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+  .hero h1 { color: #fff; font-size: clamp(36px, 5vw, 58px); font-weight: 900; line-height: 1.08; margin-bottom: 16px; }
+  .hero h1 span { color: #ff9999; }
+  .hero-tagline { color: #ff9999; font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+  .hero-desc { color: rgba(255,255,255,0.82); font-size: 17px; line-height: 1.75; max-width: 640px; margin-bottom: 40px; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary { background: #b50000; color: #fff; padding: 16px 36px; border-radius: 8px; font-size: 15px; font-weight: 700; text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .btn-primary:hover { background: #d40000; transform: translateY(-2px); }
+  .btn-outline { background: rgba(255,255,255,0.08); color: #fff; border: 1.5px solid rgba(255,255,255,0.3); padding: 16px 36px; border-radius: 8px; font-size: 15px; font-weight: 700; text-decoration: none; transition: background 0.2s; display: inline-block; }
+  .btn-outline:hover { background: rgba(255,255,255,0.14); }
+  .hero-stats { display: flex; gap: 48px; margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.14); flex-wrap: wrap; }
+  .stat .num { color: #ff9999; font-size: 32px; font-weight: 900; line-height: 1; }
+  .stat .lbl { color: rgba(255,255,255,0.6); font-size: 13px; margin-top: 4px; }
+
+  /* SECTIONS */
+  section { padding: 80px 60px; max-width: 1100px; margin: 0 auto; }
+  .section-tag { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #b50000; margin-bottom: 12px; }
+  .section-title { font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: #0d1b2a; margin-bottom: 16px; line-height: 1.2; }
+  .section-sub { font-size: 17px; color: #555; line-height: 1.7; max-width: 680px; margin-bottom: 40px; }
+
+  /* PROBLEM */
+  .problem-section { background: #fff; }
+  .problem-inner { max-width: 1100px; margin: 0 auto; padding: 80px 60px; }
+  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 32px 0; }
+  .proj-card { background: #f3f6fa; border: 1px solid #d0dcea; border-radius: 8px; padding: 16px 18px; }
+  .proj-card strong { display: block; font-size: 14px; color: #0d1b2a; margin-bottom: 4px; }
+  .proj-card span { font-size: 13px; color: #555; line-height: 1.45; }
+  .problem-box { background: linear-gradient(135deg, #0d1b2a, #1a3353); border-radius: 12px; padding: 32px 36px; margin: 32px 0; }
+  .problem-box .pb-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 12px; }
+  .problem-box p { color: rgba(255,255,255,0.92); font-size: 19px; font-weight: 700; line-height: 1.55; margin: 0 0 10px; }
+  .problem-box .pb-sub { color: rgba(255,255,255,0.65); font-size: 15px; font-weight: 400; line-height: 1.65; margin: 0; }
+
+  /* SOLUTION */
+  .sol-section { background: #f0f3f7; }
+  .sol-inner { max-width: 1100px; margin: 0 auto; padding: 80px 60px; }
+  .sol-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+  .sol-card { border-radius: 12px; padding: 28px 28px 24px; color: #fff; }
+  .sol-card.dark { background: linear-gradient(135deg, #0d1b2a, #1a3353); }
+  .sol-card.red  { background: linear-gradient(135deg, #7a0000, #b50000); }
+  .sol-card h3 { font-size: 20px; font-weight: 900; margin-bottom: 10px; }
+  .sol-card p  { color: rgba(255,255,255,0.85); font-size: 14px; line-height: 1.6; margin-bottom: 14px; }
+  .sol-card ul { padding-left: 18px; }
+  .sol-card li { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.65; margin-bottom: 4px; }
+  .price-badge { display: inline-block; margin-top: 16px; background: rgba(255,255,255,0.18); color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+  .benefits-box { background: linear-gradient(135deg, #fff8f8, #fdf0f0); border: 1px solid #f0c0c0; border-radius: 12px; padding: 28px 32px; margin-top: 24px; }
+  .benefits-box h3 { color: #7a0000; font-size: 18px; margin-bottom: 16px; }
+  .benefits-box li { font-size: 15px; color: #333; line-height: 1.7; margin-bottom: 6px; padding-left: 4px; }
+  .benefits-box li::marker { color: #b50000; }
+
+  /* CAROUSEL */
+  .carousel-section { background: #0d1b2a; padding: 80px 0; }
+  .carousel-inner { max-width: 1100px; margin: 0 auto; padding: 0 60px; }
+  .carousel-inner .section-tag { color: #ff9999; }
+  .carousel-inner .section-title { color: #fff; }
+  .carousel-inner .section-sub { color: rgba(255,255,255,0.65); }
+  .carousel-wrap { position: relative; margin-top: 32px; }
+  .carousel-track { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; padding-bottom: 12px; }
+  .carousel-track::-webkit-scrollbar { height: 4px; }
+  .carousel-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 4px; }
+  .carousel-track::-webkit-scrollbar-thumb { background: #b50000; border-radius: 4px; }
+  .carousel-slide { flex: 0 0 calc(66% - 10px); scroll-snap-align: start; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+  .carousel-slide img { width: 100%; display: block; height: auto; }
+  .carousel-caption { background: rgba(255,255,255,0.06); padding: 14px 18px; }
+  .carousel-caption span { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #ff9999; display: block; margin-bottom: 4px; }
+  .carousel-caption p { font-size: 14px; color: rgba(255,255,255,0.8); margin: 0; }
+  .carousel-nav { display: flex; gap: 10px; margin-top: 20px; }
+  .c-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+  .c-btn:hover { background: #b50000; border-color: #b50000; }
+  .portfolio-link { margin-top: 40px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
+  .qr-block { text-align: center; }
+  .qr-block img { border-radius: 10px; border: 3px solid rgba(255,255,255,0.15); display: block; }
+  .qr-block p { color: rgba(255,255,255,0.5); font-size: 12px; margin-top: 8px; }
+  .portfolio-text h3 { color: #fff; font-size: 22px; font-weight: 900; margin-bottom: 8px; }
+  .portfolio-text p { color: rgba(255,255,255,0.7); font-size: 15px; line-height: 1.65; max-width: 440px; }
+  .portfolio-text a { color: #ff9999; text-decoration: none; font-weight: 700; }
+
+  /* STEPS */
+  .steps-section { background: #fff; }
+  .steps-inner { max-width: 1100px; margin: 0 auto; padding: 80px 60px; }
+  .steps-list { margin-top: 32px; display: flex; flex-direction: column; gap: 20px; }
+  .step-item { display: flex; gap: 20px; align-items: flex-start; }
+  .step-num { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #1a3353, #b50000); color: #fff; font-weight: 900; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-body strong { display: block; font-size: 17px; font-weight: 700; color: #0d1b2a; margin-bottom: 4px; }
+  .step-body p { font-size: 15px; color: #555; margin: 0; line-height: 1.6; }
+
+  /* CONTACT */
+  .contact-section { background: linear-gradient(140deg, #0d1b2a, #1a3353 60%, #7a0000); padding: 80px 60px; }
+  .contact-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+  .contact-inner .section-tag { color: #ff9999; }
+  .contact-inner .section-title { color: #fff; margin-bottom: 12px; }
+  .contact-inner .section-sub { color: rgba(255,255,255,0.7); margin-bottom: 48px; max-width: 100%; }
+  .contact-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 16px; padding: 36px 40px; }
+  .contact-card h3 { color: #fff; font-size: 26px; font-weight: 900; margin-bottom: 6px; }
+  .contact-card .role { color: #ff9999; font-size: 14px; font-weight: 600; margin-bottom: 24px; display: block; letter-spacing: 1px; }
+  .contact-items { display: flex; flex-direction: column; gap: 12px; }
+  .contact-item { color: rgba(255,255,255,0.88); font-size: 16px; }
+  .contact-item a { color: #ff9999; text-decoration: none; font-weight: 600; }
+  .contact-item a:hover { text-decoration: underline; }
+  .contact-btn { display: inline-block; margin-top: 28px; background: #b50000; color: #fff; padding: 16px 40px; border-radius: 8px; font-size: 16px; font-weight: 700; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .contact-btn:hover { background: #d40000; transform: translateY(-2px); }
+
+  @media (max-width: 768px) {
+    nav { padding: 12px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    section, .problem-inner, .sol-inner, .carousel-inner, .steps-inner { padding: 60px 24px; }
+    .projects-grid { grid-template-columns: 1fr 1fr; }
+    .sol-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 28px; }
+    .carousel-slide { flex: 0 0 85%; }
+    .portfolio-link { flex-direction: column; align-items: flex-start; }
+    .contact-section { padding: 60px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Бюро Диалектика</div>
+  <div class="nav-links">
+    <a href="#problem">Проблема</a>
+    <a href="#solution">Решение</a>
+    <a href="#cases">Опыт</a>
+    <a href="#steps">Шаги</a>
+  </div>
+  <a href="#contact" class="nav-cta">Написать нам</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <div class="badge-brand">Бюро Диалектика</div>
+      <div class="badge-tag">Коммерческое предложение</div>
+    </div>
+    <h1>Методология<br>внедрения ИИ<br>в <span>RZD Digital</span></h1>
+    <div class="hero-tagline">Ваши ИИ-проекты созданы. Мы поможем сделать так, чтобы ими реально пользовались.</div>
+    <div class="hero-desc">
+      17 филиалов, сотни тысяч сотрудников, десятки учебных заведений —
+      все они получают новые инструменты без понятной методики работы.
+      Мы закрываем этот разрыв.
+    </div>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Обсудить проект</a>
+      <a href="#cases" class="btn-outline">Посмотреть кейсы</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="num">10+</div><div class="lbl">проектов внедрения ИИ</div></div>
+      <div class="stat"><div class="num">−65%</div><div class="lbl">время на рабочие циклы</div></div>
+      <div class="stat"><div class="num">17</div><div class="lbl">филиалов РЖД охватим</div></div>
+      <div class="stat"><div class="num">100%</div><div class="lbl">команд внедряют после обучения</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<div id="problem" class="problem-section">
+<div class="problem-inner">
+  <div class="section-tag">01 — Проблема</div>
+  <div class="section-title">RZD Digital строит технологии.<br>Люди ими не пользуются.</div>
+  <div class="section-sub">Вы уже создали десятки ИИ-решений для всей сети РЖД. Но между разработкой и реальным использованием — пропасть.</div>
+
+  <div class="projects-grid">
+    <div class="proj-card"><strong>Цифровой диспетчер</strong><span>ИИ-помощник для маневрового диспетчера на сортировочных станциях</span></div>
+    <div class="proj-card"><strong>Доверительная среда</strong><span>Цифровая платформа для локомотивного комплекса</span></div>
+    <div class="proj-card"><strong>Цифровая станция</strong><span>Автоматизация обработки вагонов и поездов</span></div>
+    <div class="proj-card"><strong>SAP HANA + ИИ</strong><span>Отчётность в 43 раза быстрее, точность распределения затрат ×40</span></div>
+    <div class="proj-card"><strong>Нейросети безопасности</strong><span>Защита от выхода животных на ж/д через видеоаналитику</span></div>
+    <div class="proj-card"><strong>Пассажирские сервисы</strong><span>Обработка 2000+ запросов на билеты в секунду</span></div>
+  </div>
+
+  <div class="problem-box">
+    <div class="pb-label">Разрыв</div>
+    <p>Технологии созданы. Нет методологии, как научить ими пользоваться.</p>
+    <p class="pb-sub">Сотни тысяч сотрудников и учебные заведения, выпускающие кадры для отрасли, получают новые инструменты без понятной методики. Инвестиции в разработку не конвертируются в реальное использование на местах. ROI от ИИ-проектов остаётся на бумаге.</p>
+  </div>
+</div>
+</div>
+
+<!-- SOLUTION -->
+<div id="solution" class="sol-section">
+<div class="sol-inner">
+  <div class="section-tag">02 — Решение</div>
+  <div class="section-title">Методика + курс.<br>От пилота — к тиражу.</div>
+  <div class="section-sub">Два продукта, которые вместе закрывают разрыв между разработкой ИИ и его реальным использованием по всей сети.</div>
+
+  <div class="sol-grid">
+    <div class="sol-card dark">
+      <h3>Методика внедрения</h3>
+      <p>Стандарт работы с ИИ-инструментами РЖД под конкретные роли: диспетчер, мастер по ТО, нарядчик, управленец.</p>
+      <ul>
+        <li>Промпт-библиотека под задачи каждой специальности</li>
+        <li>Чек-листы: что доверять ИИ, где нужен человек</li>
+        <li>Программа train-the-trainer для внутренних инструкторов</li>
+        <li>Тиражируется по всем 17 филиалам без нас</li>
+      </ul>
+      <div class="price-badge">от 800 000 ₽</div>
+    </div>
+    <div class="sol-card red">
+      <h3>Курс для учебных заведений</h3>
+      <p>Готовый курс «ИИ-инструменты РЖД» для РУТ МИИТ, Куйбышевского ж/д техникума и других учебных заведений отрасли.</p>
+      <ul>
+        <li>Встраивается в программы ДПО и базовые курсы специальностей</li>
+        <li>Выпускники приходят уже готовыми к работе с ИИ</li>
+        <li>Лицензия — неограниченное использование + ежегодное обновление</li>
+        <li>Формат: видеомодули + практика + аттестация</li>
+      </ul>
+      <div class="price-badge">от 900 000 ₽</div>
+    </div>
+  </div>
+
+  <div class="benefits-box">
+    <h3>Что получает RZD Digital</h3>
+    <ul>
+      <li>Ваши технологии реально используются — не только в пилотных, а по всей сети</li>
+      <li>Единый стандарт работы с ИИ в 17 филиалах — без разброса в компетенциях</li>
+      <li>Новые специалисты из учебных заведений готовы к вашим инструментам с первого дня</li>
+      <li>Измеримый ROI: от инвестиций в разработку ИИ-проектов до реального применения</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- CAROUSEL -->
+<div id="cases" class="carousel-section">
+<div class="carousel-inner">
+  <div class="section-tag">03 — Наш опыт</div>
+  <div class="section-title">Мы уже делали это.</div>
+  <div class="section-sub">Более 10 проектов внедрения ИИ и цифровой трансформации — в госструктурах, университетах, промышленных предприятиях.</div>
+
+  <div class="carousel-wrap">
+    <div class="carousel-track" id="track">
+      <div class="carousel-slide">
+        <img src="cases/case2.png" alt="Кейс 2">
+        <div class="carousel-caption">
+          <span>Кейс 2 · Сервисная компания</span>
+          <p>Внедрение проектного подхода в компании водоснабжения — переход на Notion, ускорение адаптации сотрудников</p>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <img src="cases/case3.png" alt="Кейс 3">
+        <div class="carousel-caption">
+          <span>Кейс 3 · Производство</span>
+          <p>Модернизация двух заводов металлоконструкций — миграция на 1С/1С ERP, дорожная карта с минимизацией рисков</p>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <img src="cases/case6.png" alt="Кейс 6">
+        <div class="carousel-caption">
+          <span>Кейс 6 · ИИ для менеджмента</span>
+          <p>Персональный ИИ-ассистент для топ-менеджера — бот интегрирован по всем корпоративным системам, экономия часов в неделю</p>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <img src="cases/case7.png" alt="Кейс 7">
+        <div class="carousel-caption">
+          <span>Кейс 7 · Технический университет</span>
+          <p>Управление портфелем НИОКР-проектов — централизованная платформа, дашборд, проект доставлен в срок в 13 раз быстрее</p>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <img src="cases/case9.png" alt="Кейс 9">
+        <div class="carousel-caption">
+          <span>Кейс 9 · Промышленность</span>
+          <p>Быстрый анализ лотов и конкурсной документации для завода арматуры — кратное сокращение времени на тендерную работу</p>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <img src="cases/case10.png" alt="Кейс 10">
+        <div class="carousel-caption">
+          <span>Кейс 10 · Промышленность</span>
+          <p>Система рыночного анализа конкурентов для завода арматуры — стратегический инструмент на основе реальных данных рынка</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-nav">
+      <button class="c-btn" onclick="scroll(-1)">←</button>
+      <button class="c-btn" onclick="scroll(1)">→</button>
+    </div>
+  </div>
+
+  <div class="portfolio-link">
+    <div class="qr-block">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&color=ffffff&bgcolor=1a3353&data=https%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F12pw2gHmEBhL0sXJfN3KC1za3RYDDQeS0%2Fview%3Fusp%3Ddrive_link" alt="QR-код на портфолио" width="140" height="140">
+      <p>Сканируйте для просмотра</p>
+    </div>
+    <div class="portfolio-text">
+      <h3>Больше кейсов — в нашем портфолио</h3>
+      <p>Полная подборка проектов по внедрению ИИ, методологии и цифровой трансформации — со всеми деталями, результатами и метриками.<br><br>
+      <a href="https://drive.google.com/file/d/12pw2gHmEBhL0sXJfN3KC1za3RYDDQeS0/view?usp=drive_link" target="_blank">Открыть портфолио →</a></p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- STEPS -->
+<div id="steps" class="steps-section">
+<div class="steps-inner">
+  <div class="section-tag">04 — Следующий шаг</div>
+  <div class="section-title">Три шага до результата</div>
+  <div class="section-sub">Начинаем с малого — пилотируем на одном продукте и одном регионе, затем тиражируем без нашего участия.</div>
+
+  <div class="steps-list">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>60-минутная встреча</strong>
+        <p>Уточняем, какие ИИ-проекты RZD Digital приоритетны для тиражирования и какие учебные заведения рассматриваются как первые партнёры.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Пилот на одном проекте + одном регионе</strong>
+        <p>Берём один ИИ-продукт RZD Digital, разрабатываем методику и отрабатываем на пилотном филиале или учебном заведении. Фиксируем метрики.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Тиражирование по всей сети</strong>
+        <p>На основе пилота передаём готовый методологический пакет. Он тиражируется по всем 17 филиалам — самостоятельно, без нашего постоянного участия.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="contact-section">
+<div class="contact-inner">
+  <div class="section-tag">05 — Контакт</div>
+  <div class="section-title">Давайте обсудим</div>
+  <div class="section-sub">Готовы провести 60-минутную встречу и показать, как методика работает на конкретном ИИ-продукте RZD Digital.</div>
+
+  <div class="contact-card">
+    <h3>Игнатьев Кирилл</h3>
+    <span class="role">Руководитель проектов · Бюро Диалектика</span>
+    <div class="contact-items">
+      <div class="contact-item">📱 <a href="tel:+79968837063">+7 996 883 70 63</a></div>
+      <div class="contact-item">✉️ <a href="mailto:kir@redforester.com">kir@redforester.com</a></div>
+      <div class="contact-item">💬 Telegram: <a href="https://t.me/Ignat_ki">@Ignat_ki</a></div>
+      <div class="contact-item" style="opacity:0.55; font-size:14px; margin-top:4px;">dialektika.tech</div>
+    </div>
+    <a href="https://t.me/Ignat_ki" class="contact-btn" target="_blank">Написать в Telegram</a>
+  </div>
+</div>
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  function scroll(dir) {
+    const w = track.querySelector('.carousel-slide').offsetWidth + 20;
+    track.scrollBy({ left: dir * w, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
